@@ -22,6 +22,9 @@ import { getAuthority, setAuthority } from '../utils/authority';
 import router from 'umi/router';
 import { width } from 'window-size';
 
+import IntroJs from 'intro.js';
+import 'intro.js/introjs.css';
+
 const { Content } = Layout;
 
 // Conversion router to menu.
@@ -118,6 +121,26 @@ class BlankLayout extends React.PureComponent {
                 });
             }
         });
+
+        setTimeout(() => {
+            this.startIntro();
+        }, 200);
+    }
+
+    startIntro = () => {
+        // 获取包含引导元素的父容器, 并组成IntroJs
+        IntroJs().setOptions({
+            prevLabel: "上一步",
+            nextLabel: "下一步",
+            skipLabel: "跳过",
+            doneLabel: "结束",
+            overlayOpacity: 0.8,
+            showStepNumbers: false
+        }).oncomplete(function () {
+            //点击跳过按钮后执行的事件
+        }).onexit(function () {
+            //点击结束按钮后， 执行的事件
+        }).start();
     }
 
     componentDidUpdate(preProps) {
@@ -228,15 +251,17 @@ class BlankLayout extends React.PureComponent {
         const layout = (
             <Layout>
                 {isTop && !isMobile ? null : (
-                    <SiderMenu
-                        logo={logo}
-                        Authorized={Authorized}
-                        theme={navTheme}
-                        onCollapse={this.handleMenuCollapse}
-                        menuData={menuData}
-                        isMobile={isMobile}
-                        {...this.props}
-                    />
+                    <div data-step="1" data-intro="导航" >
+                        <SiderMenu
+                            logo={logo}
+                            Authorized={Authorized}
+                            theme={navTheme}
+                            onCollapse={this.handleMenuCollapse}
+                            menuData={menuData}
+                            isMobile={isMobile}
+                            {...this.props}
+                        />
+                    </div>
                 )}
                 <Layout
                     style={{
@@ -244,21 +269,28 @@ class BlankLayout extends React.PureComponent {
                         minHeight: '100vh',
                     }}
                 >
-                    <Header
-                        menuData={menuData}
-                        handleMenuCollapse={this.handleMenuCollapse}
-                        logo={logo}
-                        isMobile={isMobile}
-                        {...this.props}
-                    />
-                    <Content style={this.getContentStyle()}>{children}</Content>
-                    <Footer />
+                    <div data-step="2" data-intro="头部" >
+                        <Header
+                            menuData={menuData}
+                            handleMenuCollapse={this.handleMenuCollapse}
+                            logo={logo}
+                            isMobile={isMobile}
+                            {...this.props}
+                        />
+                    </div>
+                    <div data-step="3" data-intro="内容区域" >
+                        <Content style={this.getContentStyle()}>{children}</Content>
+                    </div>
+                    <div data-step="4" data-intro="页脚" >
+                        <Footer />
+                    </div>
+                    
                 </Layout>
             </Layout>
         );
         return (
             <React.Fragment>
-                <DocumentTitle title={this.getPageTitle(pathname)}>
+                <DocumentTitle title={this.getPageTitle(pathname)} >
                     <ContainerQuery query={query}>
                         {params => (
                             <Context.Provider value={this.getContext()}>
@@ -266,15 +298,17 @@ class BlankLayout extends React.PureComponent {
                             </Context.Provider>
                         )}
                     </ContainerQuery>
+                    
                 </DocumentTitle>
                 <Tickling />
                 {/* <GuidePage></GuidePage> */}
-                
+
                 {(rendering || process.env.NODE_ENV === 'production') ? null : ( // Do show SettingDrawer in production
                     <SettingDrawer />
                 )}
                 
             </React.Fragment>
+            
         );
     }
 }
