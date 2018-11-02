@@ -98,22 +98,6 @@ class ModifyApp extends PureComponent {
                 )}
             </FormItem>
 
-            <FormItem {...formItemLayout} label="应用描述">
-              {getFieldDecorator('goal', {
-                rules: [
-                  {
-                    message: '请输入应用描述',
-                  },
-                ],
-              })(
-                <TextArea
-                  style={{ minHeight: 32 }}
-                  placeholder="请输入应用描述"
-                  rows={4}
-                />
-              )}
-            </FormItem>
-
             <FormItem {...formItemLayout} label="应用平台" >
               {getFieldDecorator('platform', {
                 rules: [
@@ -134,6 +118,24 @@ class ModifyApp extends PureComponent {
                 </Radio.Group>
               )}
             </FormItem>
+
+            <FormItem {...formItemLayout} label="应用描述">
+              {getFieldDecorator('goal', {
+                rules: [
+                  {
+                    message: '请输入应用描述',
+                  },
+                ],
+              })(
+                <TextArea
+                  style={{ minHeight: 32 }}
+                  placeholder="请输入应用描述"
+                  rows={4}
+                />
+              )}
+            </FormItem>
+
+            
 
             {/* <FormItem {...formItemLayout} label="应用图标" help="支持扩展名：.jpg .png">
               {getFieldDecorator('UploaderImage')(<UploaderImage></UploaderImage>)}

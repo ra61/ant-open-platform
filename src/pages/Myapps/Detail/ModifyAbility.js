@@ -115,19 +115,15 @@ class ModifyAbility extends Component {
 
     sourceColumns = [
         {
-            title: '能力',
+            title: '能力（capkey）',
             dataIndex: 'capacity',
-        },
-        {
-            title: 'capkey',
-            dataIndex: 'capkey'
         },
         {
             title: '说明',
             dataIndex: 'source',
         },
         {
-            title: '',
+            title: '体验',
             render: (text, record) => (
                 <Fragment>
                     <a onClick={() => this.handleUpdateModalVisible(true, record)}>试听</a>

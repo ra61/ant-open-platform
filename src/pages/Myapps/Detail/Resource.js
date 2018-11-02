@@ -10,15 +10,11 @@ const { Option } = Select;
 
 const sourceColumns = [
     {
-        title: '能力',
+        title: '能力(capkey)',
         dataIndex: 'capacity',
     },
     {
-        title: 'capkey',
-        dataIndex: 'capkey',
-    },
-    {
-        title: '资源',
+        title: '说明',
         dataIndex: 'source',
     },
     {
